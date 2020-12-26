@@ -1,0 +1,25 @@
+{
+  "name": "rockflex",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "cross-env NUXT_HOST=0.0.0.0 NUXT_PORT=3333 nuxt",
+    "build": "nuxt build",
+    "start": "nuxt start",
+    "generate": "nuxt generate"
+  },
+  "dependencies": {
+    "core-js": "^3.6.5",
+    "nuxt": "^2.14.6"
+  },
+  "devDependencies": {
+    "@nuxtjs/style-resources": "^1.0.0",
+    "cross-env": "^7.0.2",
+    "node-sass": "^4.14.1",
+    "sass-loader": "^10.0.3"
+  },
+  "prettier": {
+    "semi": false,
+    "singleQuote": true
+  }
+}
