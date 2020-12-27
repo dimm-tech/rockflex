@@ -1,47 +1,59 @@
 <template>
   <div class="body">
-    <header class="flex plr">
+    <header class="flex">
       <div class="logo">rockflex</div>
-      <nav class="flex">
+      <nav>
         <a v-for="item in nav" :key="item.id" href="#">{{ item.page }}</a>
       </nav>
       <a class="tel" href="tel:+79059745445">+79059745445</a>
     </header>
     <main>
-      <section class="first-screen">
-        <div class="desc">
-          <div class="desc__info">
-            <h1>Гибкий камень<br />&nbsp;технология будущего!</h1>
-            <p lang="ru-RU">
-              Натуральный песчаник со своим интересным узором, необычным цветом
-              и фактурой, нанесенный поверх гибкой основы. Это позволяет
-              укладывать его даже поверх «сложной» поверхности, с закруглениями
-              или изгибами. Свойства камня, стойкость к перепадам температуры
-              при этом не меняются. Термопанели и гибкие камни востребованы как
-              облицовочные материалы внутри и снаружи помещений.
-            </p>
-          </div>
-          <ul class="desc__plus">
-            <li v-for="item in plus" :key="item.id" v-html="item.article"></li>
-          </ul>
+      <section class="desc">
+        <div class="desc__info">
+          <h1>Гибкий камень<br />&nbsp;технология будущего!</h1>
+          <p>
+            Натуральный песчаник со своим интересным узором, необычным цветом и
+            фактурой, нанесенный поверх гибкой основы. Это позволяет укладывать
+            его даже поверх «сложной» поверхности, с закруглениями или изгибами.
+            Свойства камня, стойкость к перепадам температуры при этом не
+            меняются. Термопанели и гибкие камни востребованы как облицовочные
+            материалы внутри и снаружи помещений.
+          </p>
         </div>
-        <div class="slider">
-          <div
-            :class="['slide', { show: i == 0 }]"
-            v-for="(item, i) in portfolio"
-            :key="item.i"
-          >
-            <a href="">
-              <img :src="`../assets/img/${item.img}.jpg`" alt="" />
-            </a>
-          </div>
-          <button class="prev" @click="prev">
-            <iarrow />
-          </button>
-          <button class="next" @click="next">
-            <iarrow />
-          </button>
+        <ul class="desc__plus">
+          <li v-for="item in plus" :key="item.id" v-html="item.article"></li>
+        </ul>
+      </section>
+      <section class="areas">
+        <h2>Сферы применения</h2>
+        <p>
+          Все выше перечисленные качества, дополненные природной натуральностью
+          и высокими декоративными характеристиками материала, позволяют
+          расширить сферу его использования. Он активно применяется для
+          архитектурной отделки фасадов зданий, облицовки внутренних стен в
+          помещениях любого назначения, в том числе и в тех, где присутствует
+          повышенная влажность, а также в процессе облицовки декоративных арок и
+          колонн, оформлении лестничных ступеней, каминов и барных стоек.
+        </p>
+        <div class="areas__innner">
+          <div class="areas__indoor"></div>
+          <div class="areas__otdoor"></div>
         </div>
+      </section>
+      <section class="slider">
+        <div
+          :class="['slide', { show: i == 0 }]"
+          v-for="(item, i) in portfolio"
+          :key="item.i"
+        >
+          <img :src="`../assets/img/${item.img}.jpg`" alt="" />
+        </div>
+        <button class="prev" @click="prev">
+          <iarrow />
+        </button>
+        <button class="next" @click="next">
+          <iarrow />
+        </button>
       </section>
     </main>
   </div>
@@ -50,14 +62,14 @@
 <style lang="scss">
 header {
   height: 80px;
-  padding-top: var(--body-gap-tb);
-  padding-bottom: var(--body-gap-tb);
+  padding: var(--gap);
   .logo {
     font: 700 20px/24px 'Vollkorn SC', serif;
   }
   nav {
     flex-grow: 2;
     align-self: flex-end;
+    display: none;
     width: 100%;
     position: relative;
     margin: 0 20px;
@@ -68,7 +80,7 @@ header {
       text-decoration: none;
       border-bottom: 2px solid var(--grey-dark);
       &:not(:first-child) {
-        margin-left: calc(var(--body-gap-lr) / 2);
+        margin-left: calc(var(--gap) / 2);
       }
       &:hover {
         border-bottom: 2px solid var(--red);
@@ -78,66 +90,156 @@ header {
   .tel {
     color: var(--dark);
     text-decoration: none;
-    font-weight: 900;
+    font-family: 'Merriweather';
+    font-weight: 700;
   }
 }
 main {
-  margin-top: calc(10vh - 68px);
-  .first-screen {
+  display: grid;
+  grid-template-areas:
+    'desc'
+    'slider'
+    'areas';
+  p {
+    padding-top: calc(var(--gap) * 0.5);
+    padding-left: 10px;
+    padding-bottom: var(--gap);
+  }
+  .desc {
+    grid-area: desc;
     display: flex;
-    padding-left: var(--body-gap-lr);
-    .desc {
-      display: flex;
-      flex-direction: column;
-      width: 40%;
-      height: 100%;
-      padding-right: var(--body-gap-lr);
-      &__info {
-        margin-right: var(--body-gap-lr);
-        h1 {
-          white-space: nowrap;
+    flex-direction: column;
+    width: 100%;
+    height: min-content;
+    padding-left: var(--gap);
+    padding-right: var(--gap);
+    padding-bottom: calc(var(--gap) * 3);
+    &__info {
+      h1 {
+        white-space: nowrap;
+      }
+    }
+    &__plus {
+      list-style: none;
+      li {
+        display: flex;
+        align-items: center;
+        white-space: nowrap;
+        font-size: 12px;
+        font-weight: 500;
+        &:not(:first-child) {
+          margin-top: 10px;
         }
-        p {
-          font-style: italic;
-          overflow-wrap: break-word;
-          word-wrap: break-word;
-          -webkit-hyphens: auto;
-          margin-top: calc(var(--body-gap-tb) / 2);
-          margin-left: var(--body-gap-tb);
-          margin-right: var(--body-gap-lr);
-          margin-bottom: calc(var(--body-gap-tb) * 3);
+        svg {
+          width: 24px;
+          min-width: 24px;
+          height: 24px;
+          margin-right: var(--gap);
         }
       }
+    }
+  }
+  .areas {
+    grid-area: areas;
+    padding-left: var(--gap);
+    padding-right: var(--gap);
+    padding-top: calc(var(--gap) * 3);
+  }
+  .slider {
+    grid-area: slider;
+    width: 100%;
+    height: 50vh;
+    list-style: none;
+    position: relative;
+    .slide {
+      left: 0;
+      top: 0;
+      height: 100%;
+      display: none;
+      &.show {
+        display: block;
+      }
+      img {
+        height: 100%;
+        object-fit: cover;
+      }
+    }
+    .prev,
+    .next {
+      position: absolute;
+      top: 0;
+      width: 80px;
+      height: 100%;
+      border: none;
+      background: none;
+      &:active,
+      &:focus {
+        outline: none;
+      }
+      svg {
+        width: 30px;
+        height: auto;
+        g {
+          fill: var(--grey-dark);
+        }
+      }
+    }
+    .prev {
+      left: 0;
+      svg {
+        transform: rotate(180deg);
+      }
+    }
+    .next {
+      right: 0;
+    }
+  }
+
+  @include _640 {
+    .desc {
+      flex-direction: row;
+      align-items: center;
+      padding-bottom: var(--gap);
       &__plus {
-        list-style: none;
+        padding-left: calc(var(--gap) * 2);
+        padding-bottom: 0;
+      }
+    }
+    .slider {
+      height: 80vh;
+    }
+  }
+
+  @include _960 {
+    grid-template-areas:
+      'desc slider'
+      'areas slider';
+    grid-template-columns: 40% 60%;
+    grid-template-rows: auto auto;
+    grid-gap: 20px;
+    .desc {
+      flex-direction: column;
+      align-items: flex-start;
+      &__info {
+      }
+      &__plus {
+        padding-left: 0;
         li {
-          display: flex;
-          align-items: center;
-          white-space: nowrap;
-          &:not(:first-child) {
-            margin-top: 20px;
-          }
+          font-size: 14px;
           svg {
             width: 28px;
+            min-width: 28px;
             height: 28px;
-            margin-right: 1rem;
-            &#i-temp {
-              margin-left: 2px;
-            }
+            margin-left: 10px;
           }
         }
       }
     }
+    .areas {
+      padding-top: var(--gap);
+    }
     .slider {
-      width: 60%;
-      height: 80vh;
-      list-style: none;
-      position: relative;
       .slide {
-        left: 0;
-        top: 0;
-        height: 100%;
-        display: none;
         &.show {
           display: block;
           & + .slide {
@@ -161,21 +263,16 @@ main {
             // }
           }
         }
-        a {
-          img {
-            height: 100%;
-            object-fit: cover;
-          }
-        }
       }
       .prev,
       .next {
-        position: absolute;
+        display: block;
+        position: relative;
+        top: -60px;
         width: 60px;
         height: 60px;
         background-color: var(--white);
         border: none;
-        bottom: 0;
         &:active,
         &:focus {
           outline: none;
@@ -188,7 +285,7 @@ main {
           }
         }
         svg {
-          width: 30px;
+          width: 20px;
           height: auto;
           g {
             fill: var(--grey-dark);
@@ -196,7 +293,6 @@ main {
         }
       }
       .prev {
-        left: 0;
         svg {
           transform: rotate(180deg);
           margin-left: 10px;
@@ -204,33 +300,10 @@ main {
       }
       .next {
         left: 60px;
+        top: -120px;
         svg {
           margin-left: -10px;
         }
-      }
-    }
-  }
-  @include _1280 {
-    .first-screen {
-      flex-wrap: wrap;
-      .desc {
-        width: 100%;
-        flex-direction: row;
-        height: min-content;
-        margin-bottom: var(--body-gap-lr);
-        &__info {
-          h1 {
-            margin: 0;
-          }
-        }
-        &__plus {
-          display: flex;
-          flex-direction: column;
-          justify-content: center;
-        }
-      }
-      .slider {
-        width: 100%;
       }
     }
   }
